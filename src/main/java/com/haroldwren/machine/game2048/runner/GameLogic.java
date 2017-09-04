@@ -262,7 +262,6 @@ public class GameLogic {
                 szamlalo++;
             }
         }
-        System.out.println(szamlalo);
         if(!moved) {
             if(check) {
                 rossz++;
