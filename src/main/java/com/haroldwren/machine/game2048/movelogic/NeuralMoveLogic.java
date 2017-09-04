@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class NeuralMoveLogic implements MoveLogic {
     private NEATNetwork network;
-    private static final String networkFileName = "file/temp/2048_150000_train.eg";
+    private static final String networkFileName = "file/temp/perfect.eg";
 
     /**
      * create neuralMoveLogic
@@ -79,9 +79,9 @@ public class NeuralMoveLogic implements MoveLogic {
         if(neuralOuput0>=neuralOuput1 && neuralOuput0>=neuralOuput2 && neuralOuput0>=neuralOuput3) {
             gameLogic.move(1, 0);
         } else if(neuralOuput1>=neuralOuput0 && neuralOuput1>=neuralOuput2 && neuralOuput1>=neuralOuput3) {
-            gameLogic.move(-1, 0);
-        } else if(neuralOuput2>=neuralOuput0 && neuralOuput2>=neuralOuput1 && neuralOuput2>=neuralOuput3) {
             gameLogic.move(0, 1);
+        } else if(neuralOuput2>=neuralOuput0 && neuralOuput2>=neuralOuput1 && neuralOuput2>=neuralOuput3) {
+            gameLogic.move(-1, 0);
         } else {
             gameLogic.move(0, -1);
         }

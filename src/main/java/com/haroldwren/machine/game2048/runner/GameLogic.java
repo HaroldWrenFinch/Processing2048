@@ -317,7 +317,6 @@ public class GameLogic {
         prevBoard = prevbak;
         score = prevscore;
         if(rossz>0) {
-            score = 0L;
             result = true;
         }
         return result;
