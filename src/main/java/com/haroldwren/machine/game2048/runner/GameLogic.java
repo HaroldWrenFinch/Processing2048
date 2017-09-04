@@ -36,6 +36,7 @@ public class GameLogic {
     private int animStart;
     public Long szamlalo = 0L;
     private int rossz = 0;
+    public int sic = 0;
 
     public GameLogic(PApplet pApplet) {
         this.pApplet = pApplet;
@@ -194,14 +195,14 @@ public class GameLogic {
 
         }
 
-//        if(szamlalo>=100) {
+//        if(sic>=100) {
             if(PLAYER == PlayerType.AI) {
                 func.accept(network);
             }
-//            szamlalo = 0;
+//            sic = 0;
 //        }
 
-//        szamlalo++;
+//        sic++;
     }
 
     public int[][] go(int deltaY, int deltaX, boolean check) {
@@ -292,6 +293,8 @@ public class GameLogic {
                 board = newBoard;
                 spawn();
                 success = true;
+//                System.out.println(szamlalo);
+//                System.out.println(score.doubleValue()/szamlalo.doubleValue());
             }
         }
         if(gameOver()) {
