@@ -15,7 +15,7 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 public class GameLogic {
-    private final static PlayerType PLAYER = PlayerType.HUMAN;
+    private final static PlayerType PLAYER = PlayerType.AI;
     private MoveLogic moveLogic;
     private PApplet pApplet;
     private Consumer<MLRegression> func;
@@ -34,7 +34,7 @@ public class GameLogic {
     public Long score = 0L;
     private boolean isGameOver = true;
     private int animStart;
-    public int szamlalo = 0;
+    public Long szamlalo = 0L;
     private int rossz = 0;
 
     public GameLogic(PApplet pApplet) {
@@ -56,7 +56,7 @@ public class GameLogic {
         score = 0L;
         isGameOver = false;
         rossz = 0;
-        szamlalo = 0;
+        szamlalo = 0L;
     }
 
     public void spawn() {

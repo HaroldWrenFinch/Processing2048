@@ -35,13 +35,17 @@ public class Game2048NeuralScore implements CalculateScore {
         GameNoGUIRunner populationOptimizerRunner = new GameNoGUIRunner();
         populationOptimizerRunner.setup(MoveLogicType.NEURAL);
 
-        Long avarageScore = 0L;
+        Double avarageScore = 0.0;
 
         for(int i = 0;i<10;i++) {
             while(!populationOptimizerRunner.isGameOver()) {
                 populationOptimizerRunner.run((NEATNetwork) method);
             }
-            Long succeededFrame = populationOptimizerRunner.getScore();
+            Long szamlalo = populationOptimizerRunner.getSzamlalo();
+            if(szamlalo == 0) {
+                szamlalo = 1L;
+            }
+            Double succeededFrame = populationOptimizerRunner.getScore().doubleValue() / szamlalo.doubleValue();
             avarageScore += succeededFrame;
         }
 
