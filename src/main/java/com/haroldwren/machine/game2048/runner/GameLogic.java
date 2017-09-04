@@ -258,14 +258,13 @@ public class GameLogic {
                 }
             }
         }
-        if(moved) {
-            if(check) {
-                szamlalo++;
-            }
+        if(check) {
+            szamlalo++;
         }
         if(!moved) {
             if(check) {
                 rossz++;
+                score = score - 10 * rossz;
             }
             return null;
         }
@@ -304,6 +303,9 @@ public class GameLogic {
     }
 
     public boolean gameOver() {
+        if(szamlalo>10000) {
+            return true;
+        }
         int[] deltaXs = {1, -1, 0, 0};
         int[] deltaYs = {0, 0, 1, -1};
         int[][][] prevbak = prevBoard;
@@ -316,9 +318,9 @@ public class GameLogic {
         }
         prevBoard = prevbak;
         score = prevscore;
-        if(rossz>0) {
-            result = true;
-        }
+//        if(rossz>0) {
+//            result = true;
+//        }
         return result;
     }
 
