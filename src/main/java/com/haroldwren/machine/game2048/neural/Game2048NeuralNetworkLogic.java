@@ -1,6 +1,5 @@
 package com.haroldwren.machine.game2048.neural;
 
-import com.haroldwren.machine.game2048.trainer.Game2048NeuralScore;
 import org.encog.Encog;
 import org.encog.ml.CalculateScore;
 import org.encog.ml.ea.train.EvolutionaryAlgorithm;

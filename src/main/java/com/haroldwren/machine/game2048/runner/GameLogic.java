@@ -15,11 +15,9 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 public class GameLogic {
-    private static final int GENES_SIZE = 5;
-    private final static PlayerType PLAYER = PlayerType.AI;
+    private final static PlayerType PLAYER = PlayerType.HUMAN;
     private MoveLogic moveLogic;
     private PApplet pApplet;
-    private double[] genes;
     private Consumer<MLRegression> func;
 
     private Random rand = new Random();
@@ -42,12 +40,6 @@ public class GameLogic {
     public GameLogic(PApplet pApplet) {
         this.pApplet = pApplet;
         if(pApplet!=null) {
-            genes = new double[GENES_SIZE];
-            genes[0] = 0.5;
-            genes[1] = 0.5;
-            genes[2] = 0.5;
-            genes[3] = 0.5;
-            genes[4] = 0.5;
         }
     }
 
@@ -113,18 +105,6 @@ public class GameLogic {
         restart();
     }
 
-    public void coloredRectangle(float xPos, float yPos, float width, float height, float radius, int color) {
-        pApplet.fill(color);
-        pApplet.rect(xPos, yPos, width, height, radius);
-    }
-
-    public void coloredText(String text, float xPos, float yPos, float width, float height, int color, float textSize, int textAlign) {
-        pApplet.fill(color);
-        pApplet.textAlign(textAlign);
-        pApplet.textSize(textSize);
-        pApplet.text(text, xPos, yPos, width, height);
-    }
-
     public void run(MLRegression network) {
         PAppletProxy pAppletProxy = PAppletProxy.getInstance(null);
         float duration = 0;
@@ -133,12 +113,12 @@ public class GameLogic {
 
             pApplet.background(255);
             pApplet.noStroke();
-            coloredRectangle(0, 0, pApplet.width, pApplet.height, 0, pApplet.color(150));
+            pAppletProxy.coloredRectangle(0, 0, pApplet.width, pApplet.height, 0, pApplet.color(150));
             for (int row = 0; row < board.length; row++) {
                 for (int column = 0; column < board[row].length; column++) {
                     float xPos = PADDING + (PADDING + BLOCK_SIZE) * column;
                     float yPos = PADDING + (PADDING + BLOCK_SIZE) * row;
-                    coloredRectangle(xPos, yPos, BLOCK_SIZE, BLOCK_SIZE,
+                    pAppletProxy.coloredRectangle(xPos, yPos, BLOCK_SIZE, BLOCK_SIZE,
                             5, pApplet.color(200));
                 }
             }
@@ -162,9 +142,9 @@ public class GameLogic {
                         value = prevBoard[row][column][0];
                         if(pApplet!=null) {
                             float power = pApplet.log(value)/pApplet.log(2);
-                            coloredRectangle(xTransition, yTransition, BLOCK_SIZE, BLOCK_SIZE,
+                            pAppletProxy.coloredRectangle(xTransition, yTransition, BLOCK_SIZE, BLOCK_SIZE,
                                     5, pApplet.color(255-power*255/11, power*255/11, 0));
-                            coloredText(""+prevBoard[row][column][0], xTransition, yTransition+textvoff,
+                            pAppletProxy.coloredText(""+prevBoard[row][column][0], xTransition, yTransition+textvoff,
                                     BLOCK_SIZE, BLOCK_SIZE, pApplet.color(0),
                                     20, pApplet.CENTER);
                         }
@@ -179,12 +159,12 @@ public class GameLogic {
                                 grow = 1;
                             } else {
                             }
-                            coloredRectangle(xPos-2*grow, yPos-2*grow, BLOCK_SIZE+4*grow, BLOCK_SIZE+4*grow,
+                            pAppletProxy.coloredRectangle(xPos-2*grow, yPos-2*grow, BLOCK_SIZE+4*grow, BLOCK_SIZE+4*grow,
                                     5, pApplet.color(255,255,0,100));
                         }
                     } else if (prevBoard[row][column][0]==1) {
                         if(pApplet!=null) {
-                            coloredRectangle(xPos-2, yPos-2, BLOCK_SIZE+4, BLOCK_SIZE+4,
+                            pAppletProxy.coloredRectangle(xPos-2, yPos-2, BLOCK_SIZE+4, BLOCK_SIZE+4,
                                     5, pApplet.color(255,100));
                         }
                     }
@@ -192,9 +172,9 @@ public class GameLogic {
                         pApplet.fill(200);
                         if (value > 0) {
                             float power = pApplet.log(value)/pApplet.log(2);
-                            coloredRectangle(xPos, yPos, BLOCK_SIZE, BLOCK_SIZE,
+                            pAppletProxy.coloredRectangle(xPos, yPos, BLOCK_SIZE, BLOCK_SIZE,
                                     5, pApplet.color(255-power*255/11, power*255/11, 0));
-                            coloredText(""+value, xPos, yPos+textvoff,
+                            pAppletProxy.coloredText(""+value, xPos, yPos+textvoff,
                                     BLOCK_SIZE, BLOCK_SIZE, pApplet.color(0),
                                     20, pApplet.CENTER);
                         }
@@ -204,10 +184,10 @@ public class GameLogic {
         }
 
         if(pApplet!=null) {
-            coloredText("Score: " + score, 10, 5, 100, 50, pApplet.color(0), 10, pApplet.LEFT);
+            pAppletProxy.coloredText("Score: " + score, 10, 5, 100, 50, pApplet.color(0), 10, pApplet.LEFT);
             if(isGameOver) {
-                coloredRectangle(0, 0, pApplet.width, pApplet.height, 0, pApplet.color(255, 100));
-                coloredText("Játék vége! Kattints újraindításhoz", 0, pApplet.height/2, pApplet.width, 50, pApplet.color(0),
+                pAppletProxy.coloredRectangle(0, 0, pApplet.width, pApplet.height, 0, pApplet.color(255, 100));
+                pAppletProxy.coloredText("Játék vége! Kattints újraindításhoz", 0, pApplet.height/2, pApplet.width, 50, pApplet.color(0),
                         30, pApplet.CENTER);
                 if(pApplet.mousePressed) restart();
             }
@@ -274,13 +254,12 @@ public class GameLogic {
                         prevBoard[targetYPos][targetXPos][2] = xPos;
                         boardCopy[yPos][xPos] = 0;
                         szamlalo++;
+                    } else {
+                        rossz++;
+                        return null;
                     }
                 }
             }
-        }
-        if (!moved) {
-            rossz++;
-            return null;
         }
         if(pApplet!=null) {
             animStart = pApplet.frameCount;
@@ -331,10 +310,6 @@ public class GameLogic {
             result = true;
         }
         return result;
-    }
-
-    public void setGenes(double[] genes) {
-        this.genes = genes;
     }
 
 }

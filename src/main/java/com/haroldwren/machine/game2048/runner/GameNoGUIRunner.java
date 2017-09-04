@@ -6,8 +6,7 @@ import org.encog.ml.MLRegression;
 public class GameNoGUIRunner {
     private GameLogic gameLogic = new GameLogic(null);
 
-    public GameNoGUIRunner(double[] genes) {
-        gameLogic.setGenes(genes);
+    public GameNoGUIRunner() {
     }
 
     public void setup(MoveLogicType moveLogicType) {

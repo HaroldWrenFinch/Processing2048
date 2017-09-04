@@ -1,4 +1,4 @@
-package com.haroldwren.machine.game2048.trainer;
+package com.haroldwren.machine.game2048.neural;
 
 import com.haroldwren.machine.game2048.movelogic.MoveLogicType;
 import com.haroldwren.machine.game2048.runner.GameNoGUIRunner;
@@ -32,7 +32,7 @@ public class Game2048NeuralScore implements CalculateScore {
      * @return The score.
      */
     public double calculateScore(final MLMethod method) {
-        GameNoGUIRunner populationOptimizerRunner = new GameNoGUIRunner(null);
+        GameNoGUIRunner populationOptimizerRunner = new GameNoGUIRunner();
         populationOptimizerRunner.setup(MoveLogicType.NEURAL);
 
         Long avarageScore = 0L;
