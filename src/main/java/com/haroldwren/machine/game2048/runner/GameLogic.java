@@ -204,7 +204,7 @@ public class GameLogic {
 //        szamlalo++;
     }
 
-    public int[][] go(int deltaY, int deltaX) {
+    public int[][] go(int deltaY, int deltaX, boolean check) {
         int[][] boardCopy = new int[BOARD_SIZE][BOARD_SIZE];
         for(int row = 0; row < board.length; row++) {
             for(int column = 0; column < board[row].length; column++) {
@@ -253,13 +253,21 @@ public class GameLogic {
                         prevBoard[targetYPos][targetXPos][1] = yPos;
                         prevBoard[targetYPos][targetXPos][2] = xPos;
                         boardCopy[yPos][xPos] = 0;
-                        szamlalo++;
-                    } else {
-                        rossz++;
-                        return null;
                     }
                 }
             }
+        }
+        if(moved) {
+            if(check) {
+                szamlalo++;
+            }
+        }
+        System.out.println(szamlalo);
+        if(!moved) {
+            if(check) {
+                rossz++;
+            }
+            return null;
         }
         if(pApplet!=null) {
             animStart = pApplet.frameCount;
@@ -280,7 +288,7 @@ public class GameLogic {
     public boolean move(int deltaY, int deltaX) {
         boolean success = false;
         if(!isGameOver) {
-            int[][] newBoard = go(deltaY, deltaX);
+            int[][] newBoard = go(deltaY, deltaX, true);
             if(newBoard != null) {
                 board = newBoard;
                 spawn();
@@ -300,7 +308,7 @@ public class GameLogic {
         boolean result = true;
         Long prevscore = score;
         for(int i = 0; i < BOARD_SIZE; i++) {
-            if(go(deltaYs[i], deltaXs[i]) != null) {
+            if(go(deltaYs[i], deltaXs[i], false) != null) {
                 result = false;
             }
         }
