@@ -201,7 +201,6 @@ public class GameLogic {
             }
 //            sic = 0;
 //        }
-
 //        sic++;
     }
 
@@ -317,7 +316,9 @@ public class GameLogic {
         prevBoard = prevbak;
         score = prevscore;
         if(rossz>0) {
-            result = true;
+            if(pApplet==null) {
+                result = true;
+            }
         }
         return result;
     }

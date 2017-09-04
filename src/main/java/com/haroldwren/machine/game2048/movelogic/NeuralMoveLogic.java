@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class NeuralMoveLogic implements MoveLogic {
     private NEATNetwork network;
-    private static final String networkFileName = "file/temp/perfect.eg";
+    private static final String networkFileName = "file/temp/2048_35000_train.eg";
 
     /**
      * create neuralMoveLogic
@@ -62,14 +62,18 @@ public class NeuralMoveLogic implements MoveLogic {
         BasicMLData input = new BasicMLData(neuralInput);
 
         MLData output;
+        Boolean fromFile;
         if(network != null) {
             if(network.getClass() == NEATNetwork.class) {
                 output = this.compute((NEATNetwork) network, input);
+                fromFile = false;
             } else {
                 output = this.compute((BasicNetwork) network, input);
+                fromFile = false;
             }
         } else {
             output = this.compute(this.network, input);
+            fromFile = true;
         }
         double neuralOuput0 = output.getData(0);
         double neuralOuput1 = output.getData(1);
@@ -77,13 +81,37 @@ public class NeuralMoveLogic implements MoveLogic {
         double neuralOuput3 = output.getData(3);
 
         if(neuralOuput0>=neuralOuput1 && neuralOuput0>=neuralOuput2 && neuralOuput0>=neuralOuput3) {
-            gameLogic.move(1, 0);
+            if(!gameLogic.move(1, 0) && fromFile) {
+                if(!gameLogic.move(0, 1)) {
+                    if(!gameLogic.move(-1, 0)) {
+                        gameLogic.move(0, -1);
+                    }
+                }
+            }
         } else if(neuralOuput1>=neuralOuput0 && neuralOuput1>=neuralOuput2 && neuralOuput1>=neuralOuput3) {
-            gameLogic.move(0, 1);
+            if(!gameLogic.move(0, 1) && fromFile) {
+                if(!gameLogic.move(1, 0)) {
+                    if(!gameLogic.move(-1, 0)) {
+                        gameLogic.move(0, -1);
+                    }
+                }
+            }
         } else if(neuralOuput2>=neuralOuput0 && neuralOuput2>=neuralOuput1 && neuralOuput2>=neuralOuput3) {
-            gameLogic.move(-1, 0);
+            if(!gameLogic.move(-1, 0) && fromFile) {
+                if(!gameLogic.move(1, 0)) {
+                    if(!gameLogic.move(0, 1)) {
+                        gameLogic.move(0, -1);
+                    }
+                }
+            }
         } else {
-            gameLogic.move(0, -1);
+            if(!gameLogic.move(0, -1) && fromFile) {
+                if(!gameLogic.move(1, 0)) {
+                    if(!gameLogic.move(0, 1)) {
+                        gameLogic.move(-1, 0);
+                    }
+                }
+            }
         }
     }
 
