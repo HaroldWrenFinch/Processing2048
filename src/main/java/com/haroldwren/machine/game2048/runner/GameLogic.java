@@ -320,6 +320,9 @@ public class GameLogic {
                 result = true;
             }
         }
+        if(score<3200L) {
+            score = 0L;
+        }
         return result;
     }
 

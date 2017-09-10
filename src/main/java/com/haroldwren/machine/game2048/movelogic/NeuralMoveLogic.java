@@ -16,8 +16,7 @@ import java.net.URL;
 
 public class NeuralMoveLogic implements MoveLogic {
     private NEATNetwork network;
-    private static final String networkFileName = "file/temp/2048_430000_train.eg"; // 8809024 = 2968
-
+    private static final String networkFileName = "file/temp/2048_1395000_train.eg"; // 9144576 = 3024
     /**
      * create neuralMoveLogic
      */

@@ -37,15 +37,15 @@ public class Game2048NeuralScore implements CalculateScore {
 
         Double avarageScore = 0.0;
 
-        for(int i = 0;i<15;i++) {
+//        for(int i = 0;i<15;i++) {
             while(!populationOptimizerRunner.isGameOver()) {
                 populationOptimizerRunner.run((NEATNetwork) method);
             }
             Double calculation = populationOptimizerRunner.getScore().doubleValue();
             avarageScore += calculation;
-        }
+//        }
 
-        return pow(avarageScore/15.0, 2);
+        return pow(avarageScore, 2);
     }
 
     /**
