@@ -37,26 +37,34 @@ public class NeuralMoveLogic implements MoveLogic {
         }
     }
 
+    private double log2(double num) {
+        return Math.log(num)/Math.log(2);
+    }
+
     /**
      * do the logic
      *
      * @param network
      */
     public void doNeuralLogic(GameLogic gameLogic, MLRegression network) {
-        double oszto = 2;
-        for(int i = 0; i< gameLogic.board.length;i++) {
-            for(int j = 0; j< gameLogic.board.length;j++) {
-                if(gameLogic.board[i][j]>oszto) {
-                    oszto = gameLogic.board[i][j];
-                }
-            }
-        }
+        double oszto = log2(2048);
+//        for(int i = 0; i< gameLogic.board.length;i++) {
+//            for(int j = 0; j< gameLogic.board.length;j++) {
+//                if(gameLogic.board[i][j]>oszto) {
+//                    oszto = gameLogic.board[i][j];
+//                }
+//            }
+//        }
 
         double[] neuralInput = {
-                gameLogic.board[0][0]/oszto, gameLogic.board[0][1]/oszto, gameLogic.board[0][2]/oszto, gameLogic.board[0][3]/oszto,
-                gameLogic.board[1][0]/oszto, gameLogic.board[1][1]/oszto, gameLogic.board[1][2]/oszto, gameLogic.board[1][3]/oszto,
-                gameLogic.board[2][0]/oszto, gameLogic.board[2][1]/oszto, gameLogic.board[2][2]/oszto, gameLogic.board[2][3]/oszto,
-                gameLogic.board[3][0]/oszto, gameLogic.board[3][1]/oszto, gameLogic.board[3][2]/oszto, gameLogic.board[3][3]/oszto,
+                log2(gameLogic.board[0][0])/oszto, log2(gameLogic.board[0][1])/oszto,
+                    log2(gameLogic.board[0][2])/oszto, log2(gameLogic.board[0][3])/oszto,
+                log2(gameLogic.board[1][0])/oszto, log2(gameLogic.board[1][1])/oszto,
+                    log2(gameLogic.board[1][2])/oszto, log2(gameLogic.board[1][3])/oszto,
+                log2(gameLogic.board[2][0])/oszto, log2(gameLogic.board[2][1])/oszto,
+                    log2(gameLogic.board[2][2])/oszto, log2(gameLogic.board[2][3])/oszto,
+                log2(gameLogic.board[3][0])/oszto, log2(gameLogic.board[3][1])/oszto,
+                    log2(gameLogic.board[3][2])/oszto, log2(gameLogic.board[3][3])/oszto,
         };
         BasicMLData input = new BasicMLData(neuralInput);
 

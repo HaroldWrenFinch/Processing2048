@@ -45,7 +45,7 @@ public class Game2048NeuralScore implements CalculateScore {
             avarageScore += calculation;
 //        }
 
-        return pow(avarageScore, 2);
+        return pow(avarageScore, 1);
     }
 
     /**
