@@ -38,6 +38,9 @@ public class NeuralMoveLogic implements MoveLogic {
     }
 
     private double log2(double num) {
+        if(num==0) {
+            return 0.0;
+        }
         return Math.log(num)/Math.log(2);
     }
 
