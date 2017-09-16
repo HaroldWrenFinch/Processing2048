@@ -240,10 +240,8 @@ public class GameLogic {
                 }
             }
         }
-        if(moved) {
-            if(check) {
-                szamlalo++;
-            }
+        if(check) {
+            szamlalo++;
         }
         if(!moved) {
             if(check) {
@@ -299,6 +297,9 @@ public class GameLogic {
         }
         prevBoard = prevbak;
         score = prevscore;
+        if(szamlalo>10000) {
+            result = true;
+        }
 //        if(rossz>0) {
 //            if(pApplet==null) {
 //                result = true;
