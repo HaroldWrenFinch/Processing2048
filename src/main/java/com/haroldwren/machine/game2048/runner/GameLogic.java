@@ -2,10 +2,7 @@ package com.haroldwren.machine.game2048.runner;
 
 import com.haroldwren.machine.PAppletProxy;
 import com.haroldwren.machine.game2048.elements.PlayerType;
-import com.haroldwren.machine.game2048.movelogic.MoveLogic;
-import com.haroldwren.machine.game2048.movelogic.MoveLogicType;
 import com.haroldwren.machine.game2048.movelogic.NeuralMoveLogic;
-import com.haroldwren.machine.game2048.movelogic.RandomMoveLogic;
 import org.encog.ml.MLRegression;
 import processing.core.PApplet;
 
@@ -16,7 +13,7 @@ import java.util.function.Consumer;
 
 public class GameLogic {
     private final static PlayerType PLAYER = PlayerType.AI;
-    private MoveLogic moveLogic;
+    private NeuralMoveLogic moveLogic;
     private PApplet pApplet;
     private Consumer<MLRegression> func;
 
@@ -78,7 +75,7 @@ public class GameLogic {
         prevBoard[yPos][xPos][0] = -1;
     }
 
-    public void setup(MoveLogicType moveLogicType) {
+    public void setup() {
         PAppletProxy pAppletProxy = PAppletProxy.getInstance(pApplet); // initialize the draw instance.
         pAppletProxy.setGivenHeight(TABLE_SIZE);
         pAppletProxy.setGivenWidth(TABLE_SIZE);
@@ -87,22 +84,8 @@ public class GameLogic {
             pApplet.textFont(pApplet.createFont("Courier", 20));
         }
 
-        switch (moveLogicType) {
-            case NEURAL:
-                moveLogic = new NeuralMoveLogic();
-                func = (network) -> ((NeuralMoveLogic) moveLogic).doNeuralLogic(this, network);
-                break;
-            case RANDOM:
-                moveLogic = new RandomMoveLogic();
-                func = (network) -> {
-                    try {
-                        ((RandomMoveLogic) moveLogic).doRandomLogic(this);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                };
-                break;
-        }
+        moveLogic = new NeuralMoveLogic();
+        func = (network) -> ((NeuralMoveLogic) moveLogic).doNeuralLogic(this, network);
         restart();
     }
 
@@ -265,6 +248,7 @@ public class GameLogic {
         if(!moved) {
             if(check) {
                 rossz++;
+                score = score - (1000 * rossz);
             }
             return null;
         }
@@ -315,11 +299,11 @@ public class GameLogic {
         }
         prevBoard = prevbak;
         score = prevscore;
-        if(rossz>0) {
-            if(pApplet==null) {
-                result = true;
-            }
-        }
+//        if(rossz>0) {
+//            if(pApplet==null) {
+//                result = true;
+//            }
+//        }
 
         return result;
     }

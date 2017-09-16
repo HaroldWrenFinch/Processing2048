@@ -14,9 +14,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 
-public class NeuralMoveLogic implements MoveLogic {
+public class NeuralMoveLogic {
     private NEATNetwork network;
-    private static final String networkFileName = "file/temp/2048_1395000_train.eg"; // 9144576 = 3024
+    private static final String networkFileName = "file/temp/2048_500000_train.eg";
     /**
      * create neuralMoveLogic
      */
@@ -51,13 +51,6 @@ public class NeuralMoveLogic implements MoveLogic {
      */
     public void doNeuralLogic(GameLogic gameLogic, MLRegression network) {
         double oszto = log2(2048);
-//        for(int i = 0; i< gameLogic.board.length;i++) {
-//            for(int j = 0; j< gameLogic.board.length;j++) {
-//                if(gameLogic.board[i][j]>oszto) {
-//                    oszto = gameLogic.board[i][j];
-//                }
-//            }
-//        }
 
         double[] neuralInput = {
                 log2(gameLogic.board[0][0])/oszto, log2(gameLogic.board[0][1])/oszto,
@@ -86,11 +79,8 @@ public class NeuralMoveLogic implements MoveLogic {
             fromFile = true;
         }
         double neuralOuput0 = output.getData(0);
-        double neuralOuput1 = output.getData(1);
-        double neuralOuput2 = output.getData(2);
-        double neuralOuput3 = output.getData(3);
 
-        if(neuralOuput0>=neuralOuput1 && neuralOuput0>=neuralOuput2 && neuralOuput0>=neuralOuput3) {
+        if(neuralOuput0<=0.25) {
             if(!gameLogic.move(1, 0) && fromFile) {
                 if(!gameLogic.move(0, 1)) {
                     if(!gameLogic.move(-1, 0)) {
@@ -98,7 +88,7 @@ public class NeuralMoveLogic implements MoveLogic {
                     }
                 }
             }
-        } else if(neuralOuput1>=neuralOuput0 && neuralOuput1>=neuralOuput2 && neuralOuput1>=neuralOuput3) {
+        } else if(neuralOuput0>0.25 && neuralOuput0<=0.5) {
             if(!gameLogic.move(0, 1) && fromFile) {
                 if(!gameLogic.move(1, 0)) {
                     if(!gameLogic.move(-1, 0)) {
@@ -106,7 +96,7 @@ public class NeuralMoveLogic implements MoveLogic {
                     }
                 }
             }
-        } else if(neuralOuput2>=neuralOuput0 && neuralOuput2>=neuralOuput1 && neuralOuput2>=neuralOuput3) {
+        } else if(neuralOuput0>0.5 && neuralOuput0<=0.75) {
             if(!gameLogic.move(-1, 0) && fromFile) {
                 if(!gameLogic.move(1, 0)) {
                     if(!gameLogic.move(0, 1)) {

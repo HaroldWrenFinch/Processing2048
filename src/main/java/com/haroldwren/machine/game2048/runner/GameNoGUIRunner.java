@@ -1,6 +1,5 @@
 package com.haroldwren.machine.game2048.runner;
 
-import com.haroldwren.machine.game2048.movelogic.MoveLogicType;
 import org.encog.ml.MLRegression;
 
 public class GameNoGUIRunner {
@@ -9,8 +8,8 @@ public class GameNoGUIRunner {
     public GameNoGUIRunner() {
     }
 
-    public void setup(MoveLogicType moveLogicType) {
-        gameLogic.setup(moveLogicType);
+    public void setup() {
+        gameLogic.setup();
     }
 
     public void run(MLRegression network) {

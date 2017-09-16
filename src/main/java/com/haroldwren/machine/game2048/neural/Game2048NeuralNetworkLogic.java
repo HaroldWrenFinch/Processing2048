@@ -23,7 +23,7 @@ public class Game2048NeuralNetworkLogic {
     private static final String NETWORK_FILE_NAME = "2048";
     private static final String DEFAULT_FILE_EXTENSION = "eg";
     private static final int POPULATION_SIZE = 500;
-    private static final int OUTPUT_NEURON_SIZE = 4;
+    private static final int OUTPUT_NEURON_SIZE = 1;
     private static final Boolean WRITE_PERCENTS_TO_FILE = true;
 
     public void init() throws IOException {
