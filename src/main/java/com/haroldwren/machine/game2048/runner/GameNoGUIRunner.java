@@ -27,4 +27,8 @@ public class GameNoGUIRunner {
     public Long getSzamlalo() {
         return gameLogic.szamlalo;
     }
+
+    public Long getRossz() {
+        return gameLogic.rossz;
+    }
 }

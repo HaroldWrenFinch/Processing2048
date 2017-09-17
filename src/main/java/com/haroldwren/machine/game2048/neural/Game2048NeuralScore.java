@@ -39,10 +39,17 @@ public class Game2048NeuralScore implements CalculateScore {
         double run = 1;
 
         for(int i = 0; i<run; i++) {
-            while(!populationOptimizerRunner.isGameOver()) {
+            Long szamlalo = 0L;
+            while(!populationOptimizerRunner.isGameOver() && szamlalo < 2000) {
                 populationOptimizerRunner.run((NEATNetwork) method);
+                szamlalo++;
             }
-            Double calculation = populationOptimizerRunner.getScore().doubleValue();
+            Double calculation = populationOptimizerRunner.getScore().doubleValue()
+                    - (populationOptimizerRunner.getRossz() * 1000) + (10 * (2000 - szamlalo));
+            if(populationOptimizerRunner.getScore() > Game2048NeuralNetworkLogic.maxScore) {
+                Game2048NeuralNetworkLogic.maxScore = populationOptimizerRunner.getScore();
+                System.out.println("JÓ: " + Game2048NeuralNetworkLogic.maxScore);
+            }
             avarageScore += calculation;
         }
 

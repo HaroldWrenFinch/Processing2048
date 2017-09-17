@@ -32,7 +32,7 @@ public class GameLogic {
     private boolean isGameOver = true;
     private int animStart;
     public Long szamlalo = 0L;
-    private int rossz = 0;
+    public Long rossz = 0L;
     public int sic = 0;
 
     public GameLogic(PApplet pApplet) {
@@ -53,7 +53,7 @@ public class GameLogic {
         spawn();
         score = 0L;
         isGameOver = false;
-        rossz = 0;
+        rossz = 0L;
         szamlalo = 0L;
     }
 
@@ -246,7 +246,6 @@ public class GameLogic {
         if(!moved) {
             if(check) {
                 rossz++;
-                score = score - (1000 * rossz);
             }
             return null;
         }
@@ -297,14 +296,6 @@ public class GameLogic {
         }
         prevBoard = prevbak;
         score = prevscore;
-        if(szamlalo>10000) {
-            result = true;
-        }
-//        if(rossz>0) {
-//            if(pApplet==null) {
-//                result = true;
-//            }
-//        }
 
         return result;
     }
