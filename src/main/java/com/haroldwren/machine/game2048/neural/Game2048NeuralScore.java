@@ -45,7 +45,7 @@ public class Game2048NeuralScore implements CalculateScore {
                 szamlalo++;
             }
             Double calculation = populationOptimizerRunner.getScore().doubleValue()
-                    - (populationOptimizerRunner.getRossz() * 1000) + (10 * (2000 - szamlalo));
+                    - (populationOptimizerRunner.getRossz() * 1000) + (10 * szamlalo);
             if(populationOptimizerRunner.getScore() > Game2048NeuralNetworkLogic.maxScore) {
                 Game2048NeuralNetworkLogic.maxScore = populationOptimizerRunner.getScore();
                 System.out.println("JÓ: " + Game2048NeuralNetworkLogic.maxScore);
