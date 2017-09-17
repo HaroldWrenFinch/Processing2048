@@ -17,13 +17,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Game2048NeuralNetworkLogic {
-    public static final double MAX_ITERATION = 1000000.0;
+    public static final double MAX_ITERATION = 100000.0;
     private static final double SUCCESS_RATE = 1;
     private static final double MIN_SCORE = MAX_ITERATION * SUCCESS_RATE;
     private static final String NETWORK_FILE_NAME = "2048";
     private static final String DEFAULT_FILE_EXTENSION = "eg";
     private static final int POPULATION_SIZE = 500;
-    private static final int OUTPUT_NEURON_SIZE = 1;
+    private static final int OUTPUT_NEURON_SIZE = 3;
     private static final Boolean WRITE_PERCENTS_TO_FILE = true;
     public static double maxScore = 0L;
 
@@ -52,7 +52,7 @@ public class Game2048NeuralNetworkLogic {
                         savedTrainNO++;
                     }
                 }
-                if(iteration % 50000 == 0) {
+                if(iteration % 500 == 0) {
                     writeToDisk(pop, false, "2048_"+ iteration +"_train");
                 }
             }

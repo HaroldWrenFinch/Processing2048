@@ -1,6 +1,7 @@
 package com.haroldwren.machine.game2048.movelogic;
 
 import com.haroldwren.machine.game2048.runner.GameLogic;
+import org.encog.mathutil.Equilateral;
 import org.encog.ml.MLRegression;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
@@ -17,6 +18,7 @@ import java.net.URL;
 public class NeuralMoveLogic {
     private NEATNetwork network;
     private static final String networkFileName = "file/temp/2048_500000_train.eg";
+    private static final Equilateral equilateral = new Equilateral(4, 1, 0);
     /**
      * create neuralMoveLogic
      */
@@ -78,9 +80,10 @@ public class NeuralMoveLogic {
             output = this.compute(this.network, input);
             fromFile = true;
         }
-        double neuralOuput0 = output.getData(0);
 
-        if(neuralOuput0<=0.25) {
+        int success = equilateral.decode(output.getData());
+
+        if(success == 0) {
             if(!gameLogic.move(1, 0) && fromFile) {
                 if(!gameLogic.move(0, 1)) {
                     if(!gameLogic.move(-1, 0)) {
@@ -88,7 +91,7 @@ public class NeuralMoveLogic {
                     }
                 }
             }
-        } else if(neuralOuput0>0.25 && neuralOuput0<=0.5) {
+        } else if(success == 1) {
             if(!gameLogic.move(0, 1) && fromFile) {
                 if(!gameLogic.move(1, 0)) {
                     if(!gameLogic.move(-1, 0)) {
@@ -96,7 +99,7 @@ public class NeuralMoveLogic {
                     }
                 }
             }
-        } else if(neuralOuput0>0.5 && neuralOuput0<=0.75) {
+        } else if(success == 2) {
             if(!gameLogic.move(-1, 0) && fromFile) {
                 if(!gameLogic.move(1, 0)) {
                     if(!gameLogic.move(0, 1)) {
