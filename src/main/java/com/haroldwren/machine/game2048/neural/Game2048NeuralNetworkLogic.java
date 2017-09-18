@@ -23,7 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Game2048NeuralNetworkLogic {
-    public static final double MAX_ITERATION = 6000.0;
+    public static final double MAX_ITERATION = 12000.0;
     private static final double SUCCESS_RATE = 1;
     private static final double MIN_SCORE = MAX_ITERATION * SUCCESS_RATE;
     private static final String NETWORK_FILE_NAME = "2048";
