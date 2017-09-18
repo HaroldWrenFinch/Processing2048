@@ -6,36 +6,27 @@ import org.encog.ml.MLRegression;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.neat.NEATNetwork;
-import org.encog.neural.neat.NEATPopulation;
-import org.encog.neural.neat.PersistNEATPopulation;
 import org.encog.neural.networks.BasicNetwork;
+import org.encog.persist.EncogDirectoryPersistence;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URL;
 
 public class NeuralMoveLogic {
-    private NEATNetwork network;
+    private BasicNetwork network;
     private static final String networkFileName = "file/temp/2048_500000_train.eg";
     private static final Equilateral equilateral = new Equilateral(4, 1, 0);
     /**
      * create neuralMoveLogic
      */
     public NeuralMoveLogic() {
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        URL resource = classLoader.getResource(networkFileName);
-        if(null!= resource) {
-            File networkFile = new File(resource.getFile());
-            PersistNEATPopulation pnp = new PersistNEATPopulation();
-            try {
-                InputStream inputStream = new FileInputStream(networkFile);
-                NEATPopulation pop = (NEATPopulation) pnp.read(inputStream);
-                network = (NEATNetwork)pop.getCODEC().decode(pop.getBestGenome());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        File networkFile = new File("/tmp/2048_40_train.eg");
+        try {
+            InputStream inputStream = new FileInputStream(networkFile);
+            network = (BasicNetwork) EncogDirectoryPersistence.loadObject(networkFile);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

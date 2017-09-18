@@ -6,6 +6,7 @@ import org.encog.ml.MLMethod;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.buffer.BufferedMLDataSet;
 import org.encog.neural.neat.NEATNetwork;
+import org.encog.neural.networks.BasicNetwork;
 
 import static java.lang.Math.pow;
 
@@ -36,16 +37,16 @@ public class Game2048NeuralScore implements CalculateScore {
 
         Double avarageScore = 0.0;
 
-        double run = 1;
+        double run = 10;
 
         for(int i = 0; i<run; i++) {
             Long szamlalo = 0L;
             while(!populationOptimizerRunner.isGameOver() && szamlalo < 2000) {
-                populationOptimizerRunner.run((NEATNetwork) method);
+                populationOptimizerRunner.run((BasicNetwork) method);
                 szamlalo++;
             }
             Double calculation = populationOptimizerRunner.getScore().doubleValue()
-                    - (populationOptimizerRunner.getRossz() * 1000) + (10 * szamlalo);
+                    - (populationOptimizerRunner.getRossz() * 100);
             if(populationOptimizerRunner.getScore() > Game2048NeuralNetworkLogic.maxScore) {
                 Game2048NeuralNetworkLogic.maxScore = populationOptimizerRunner.getScore();
                 System.out.println("JÓ: " + Game2048NeuralNetworkLogic.maxScore);
